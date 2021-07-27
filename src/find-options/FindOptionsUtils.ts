@@ -23,6 +23,7 @@ export class FindOptionsUtils {
         return possibleOptions &&
                 (
                     Array.isArray(possibleOptions.select) ||
+                    Array.isArray(possibleOptions.exclude) ||
                     possibleOptions.where instanceof Object ||
                     typeof possibleOptions.where === "string" ||
                     Array.isArray(possibleOptions.relations) ||
