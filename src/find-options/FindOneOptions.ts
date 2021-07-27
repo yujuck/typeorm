@@ -14,6 +14,12 @@ export interface FindOneOptions<Entity = any> {
     select?: (keyof Entity)[];
 
     /**
+     * Specifies what columns show be exclude.
+     */
+    exclude?: (keyof Entity)[];
+
+
+    /**
      * Simple condition that should be applied to match entities.
      */
     where?: FindConditions<Entity>[]|FindConditions<Entity>|ObjectLiteral|string;

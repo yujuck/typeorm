@@ -87,6 +87,8 @@ export class MongoEntityManager extends EntityManager {
         if (FindOptionsUtils.isFindManyOptions(optionsOrConditions)) {
             if (optionsOrConditions.select)
                 cursor.project(this.convertFindOptionsSelectToProjectCriteria(optionsOrConditions.select));
+            if (optionsOrConditions.exclude)
+                cursor.project(this.convertFindOptionsExcludeToProjectCriteria(optionsOrConditions.exclude));
             if (optionsOrConditions.skip)
                 cursor.skip(optionsOrConditions.skip);
             if (optionsOrConditions.take)
@@ -108,6 +110,8 @@ export class MongoEntityManager extends EntityManager {
         if (FindOptionsUtils.isFindManyOptions(optionsOrConditions)) {
             if (optionsOrConditions.select)
                 cursor.project(this.convertFindOptionsSelectToProjectCriteria(optionsOrConditions.select));
+            if (optionsOrConditions.exclude)
+                cursor.project(this.convertFindOptionsExcludeToProjectCriteria(optionsOrConditions.exclude));
             if (optionsOrConditions.skip)
                 cursor.skip(optionsOrConditions.skip);
             if (optionsOrConditions.take)
@@ -155,6 +159,8 @@ export class MongoEntityManager extends EntityManager {
         if (FindOptionsUtils.isFindManyOptions(optionsOrConditions)) {
             if (optionsOrConditions.select)
                 cursor.project(this.convertFindOptionsSelectToProjectCriteria(optionsOrConditions.select));
+            if (optionsOrConditions.exclude)
+                cursor.project(this.convertFindOptionsExcludeToProjectCriteria(optionsOrConditions.exclude));
             if (optionsOrConditions.skip)
                 cursor.skip(optionsOrConditions.skip);
             if (optionsOrConditions.take)
@@ -182,6 +188,8 @@ export class MongoEntityManager extends EntityManager {
         if (FindOptionsUtils.isFindOneOptions(findOneOptionsOrConditions)) {
             if (findOneOptionsOrConditions.select)
                 cursor.project(this.convertFindOptionsSelectToProjectCriteria(findOneOptionsOrConditions.select));
+            if (findOneOptionsOrConditions.exclude)
+                cursor.project(this.convertFindOptionsExcludeToProjectCriteria(findOneOptionsOrConditions.exclude));
             if (findOneOptionsOrConditions.order)
                 cursor.sort(this.convertFindOptionsOrderToOrderCriteria(findOneOptionsOrConditions.order));
         }
@@ -643,6 +651,13 @@ export class MongoEntityManager extends EntityManager {
     protected convertFindOptionsSelectToProjectCriteria(selects: (keyof any)[]) {
         return selects.reduce((projectCriteria, key) => {
             projectCriteria[key] = 1;
+            return projectCriteria;
+        }, {} as any);
+    }
+
+    protected convertFindOptionsExcludeToProjectCriteria(excludes: (keyof any)[]) {
+        return excludes.reduce((projectCriteria, key) => {
+            projectCriteria[key] = 0;
             return projectCriteria;
         }, {} as any);
     }
